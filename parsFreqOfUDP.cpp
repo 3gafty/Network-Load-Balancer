@@ -1,12 +1,11 @@
 #include "parsFreqOfUDP.h"
 
-int parsFreqOfUDP(const char* f)
+int parsFreqOfUDP(const std::string& f)
 {
         std::ifstream input(f);
-        if (!f)
+        if (!input)
 	{
-		std::cerr << "File could not be opened for reading!" << std::endl;
-		exit(4);
+		throw std::runtime_error("File could not be opened for reading!");
 	}
 
         std::string freq;

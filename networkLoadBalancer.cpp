@@ -22,13 +22,13 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
         bool run{true};
 	int num{0};
 	while (run) {
-		char buf[1024];
+		char buf[SIZEBUFF];
 		sockaddr_in clientAddr = conn.second[num++];
 		num %= conn.second.size();
 		socklen_t sizeAddr = sizeof(clientAddr);
                 std::this_thread::sleep_for (std::chrono::milliseconds(1000 / freq));
-		int err = recvfrom(listener, buf, 1024, 0, 0, 0);
-		if (err > 0) {
+		int err = recvfrom(listener, buf, SIZEBUFF, 0, 0, 0);
+		if (err > 0 && err < SIZEBUFF) {
 			buf[err] = 0;
                         std::string output(buf);
 			std::cout << "sendto port - " << ntohs(clientAddr.sin_port) << std::endl;
@@ -37,9 +37,7 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 			output.clear();
 		}
 		else {
-			std::cout << "Error resieved" << std::endl;
-			close(listener);
-			run = false;
+			std::cerr << "Error resieved" << std::endl;
 		}
 	}
 }

@@ -37,7 +37,11 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 			}
 			if (dgCounter <= freq && elapsedTimer <= ONE_SECOND) {
 				//std::cout << "sendto port - " << ntohs(clientAddr.sin_port) << std::endl;
-				sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
+				int senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
+				if (senderr > SIZEBUFF)
+					std::cerr << "PacketSize more then SIZEBUFF. Not implemented case" << std::endl;
+				else
+					std::cerr << "Error sendto" << std::endl;
 				++num %= conn.second.size();
 			}
 			else if (elapsedTimer > ONE_SECOND) {

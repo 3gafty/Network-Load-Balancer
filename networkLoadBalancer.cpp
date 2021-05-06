@@ -21,14 +21,16 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 
         bool run{true};
 	int num{0};
+	unsigned int dgCounter{0};
 	while (run) {
 		char buf[SIZEBUFF];
 		sockaddr_in clientAddr = conn.second[num++];
 		num %= conn.second.size();
 		socklen_t sizeAddr = sizeof(clientAddr);
-                std::this_thread::sleep_for (std::chrono::milliseconds(1000 / freq));
 		int err = recvfrom(listener, buf, SIZEBUFF, 0, 0, 0);
+		auto timePoint = std::chrono::steady_clock::now();
 		if (err > 0 && err < SIZEBUFF) {
+			++dgCounter;
 			buf[err] = 0;
                         std::string output(buf);
 			std::cout << "sendto port - " << ntohs(clientAddr.sin_port) << std::endl;

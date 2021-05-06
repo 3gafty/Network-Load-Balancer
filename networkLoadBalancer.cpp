@@ -48,7 +48,7 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 				int senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
 				if (senderr > SIZEBUFF)
 					std::cerr << "PacketSize more then SIZEBUFF. Not implemented case" << std::endl;
-				else
+				else if (senderr < 0)
 					std::cerr << "Error sendto" << std::endl;
 				++num %= conn.second.size();
 			}

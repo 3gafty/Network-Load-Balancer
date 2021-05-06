@@ -1,5 +1,13 @@
 #include "parsAddress.h"
 
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <exception>
+
+#include <unistd.h>
+#include <netinet/in.h>
+
 std::pair<sockaddr_in, std::vector<sockaddr_in>> parsAddress(const std::string& f)
 {
         std::ifstream input(f);

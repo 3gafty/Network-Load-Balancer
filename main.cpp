@@ -2,6 +2,8 @@
 #include "parsFreqOfUDP.h"
 #include "networkLoadBalancer.h"
 
+#include <iostream>
+
 int main(int argc, const char* argv[])
 {
         try
@@ -9,11 +11,13 @@ int main(int argc, const char* argv[])
                 std::cout << "start" << std::endl;
                 std::pair<sockaddr_in, std::vector<sockaddr_in>> addrsConnections;
                 int freq;
-                std::string fileName(argv[1]);
 
                 if (argc < 2) {
                         throw std::runtime_error(std::string("Not select config file"));
                 }
+                
+                std::string fileName(argv[1]);
+                
                 else if (argc > 2) {
                         throw std::runtime_error(std::string("To many arguments."));
                 }

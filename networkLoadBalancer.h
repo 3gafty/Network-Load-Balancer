@@ -9,6 +9,7 @@
 #include <chrono>
 #include <thread>
 #include <cmath>
+#include <exception>
 
 #include <sys/socket.h>
 #include <unistd.h>
@@ -17,7 +18,8 @@
 #include <fcntl.h>
 
 #define SIZEBUFF 1024
+#define ONE_SECOND 1000
 
-void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>& conn, const int freq);
+void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>& conn, const unsigned int freq);
 
 #endif // !NETWORKLOADBALANCER_H

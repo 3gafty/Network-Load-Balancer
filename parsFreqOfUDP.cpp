@@ -1,5 +1,8 @@
 #include "parsFreqOfUDP.h"
 
+#include <iostream>
+#include <fstream>
+
 int parsFreqOfUDP(const std::string& f)
 {
         std::ifstream input(f);

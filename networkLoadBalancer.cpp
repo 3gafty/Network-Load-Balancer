@@ -1,5 +1,13 @@
 #include "networkLoadBalancer.h"
 
+#include <iostream>
+#include <chrono>
+
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <fcntl.h>
+
 void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>& conn, const unsigned int freq)
 {
 	using namespace std::chrono;
@@ -27,7 +35,7 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 		char buf[SIZEBUFF];
 		sockaddr_in clientAddr = conn.second[num];
 		socklen_t sizeAddr = sizeof(clientAddr);
-		int err = recvfrom(listener, buf, SIZEBUFF, 0, 0, 0);
+		int err = recvfrom(listener, buf, SIZEBUFF, MSG_CTRUNC, 0, 0);
 		auto timePointCurrent = steady_clock::now();
 		if (err > 0 && err < SIZEBUFF) {
 			++dgCounter;

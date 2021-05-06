@@ -11,7 +11,7 @@ nwb_src=main.cpp parsAddress.cpp parsFreqOfUDP.cpp networkLoadBalancer.cpp
 nwb_obj=$(notdir $(nwb_src:.cpp=.o))
 
 %.o: %.cpp
-	$(cc) $(cppflags) -c $< -o $@
+	$(cc) $(cppflags) -c $^ -o $@
 
 debug: cppflags+=-g3 -O0
 debug: nwb

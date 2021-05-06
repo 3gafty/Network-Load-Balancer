@@ -15,13 +15,11 @@ int main(int argc, const char* argv[])
                 if (argc < 2) {
                         throw std::runtime_error(std::string("Not select config file"));
                 }
-                
-                std::string fileName(argv[1]);
-                
                 else if (argc > 2) {
                         throw std::runtime_error(std::string("To many arguments."));
                 }
                 else {
+                        std::string fileName(argv[1]);
                         addrsConnections = parsAddress(fileName);
                         freq = parsFreqOfUDP(fileName);
                 }

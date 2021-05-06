@@ -1,12 +1,11 @@
 #include "parsAddress.h"
 
-std::pair<sockaddr_in, std::vector<sockaddr_in>> parsAddress(const char* f)
+std::pair<sockaddr_in, std::vector<sockaddr_in>> parsAddress(const std::string& f)
 {
         std::ifstream input(f);
-        if (!f)
+        if (!input)
 	{
-		std::cerr << "File could not be opened for reading!" << std::endl;
-		exit(3);
+		throw std::runtime_error("File could not be opened for reading!");
 	}
 
         int value;

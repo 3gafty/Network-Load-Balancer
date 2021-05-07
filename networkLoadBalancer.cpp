@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <fcntl.h>
+#include <errno.h>
 
 void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>& conn, const unsigned int freq)
 {
@@ -52,13 +53,13 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 			}
 			senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
 			if (senderr < 0) {
-				std::cerr << "Error sendto" << std::endl;
+				std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
 			}
 			++num;
 			num %= conn.second.size();
 		}
 		else {
-			std::cerr << "Error resieved" << std::endl;
+			std::cerr << "Error resieved. The errno value is : " << errno << std::endl;
 		}
 	}
 }

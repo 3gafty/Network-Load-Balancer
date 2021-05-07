@@ -26,42 +26,35 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 		throw std::runtime_error("bind");
 	}
 
-	bool timeFlag{false};
 	int num{0};
 	unsigned int dgCounter{0};
-	uint64_t elapsedTimer{0};
 	auto lastTimePoint = steady_clock::now();
+	int senderr{0};
 	while (true) {
 		char buf[SIZEBUFF];
 		sockaddr_in clientAddr = conn.second[num];
 		socklen_t sizeAddr = sizeof(clientAddr);
 		int err = recvfrom(listener, buf, SIZEBUFF, MSG_CTRUNC, 0, 0);
-		auto timePointCurrent = steady_clock::now();
 		if (err > SIZEBUFF)
 			std::cerr << "PacketSize more then SIZEBUFF. Not implemented case" << std::endl;
 		else if (err > 0 && err <= SIZEBUFF) {
-			++dgCounter;
-			if (timeFlag) {
-				auto timeDur = timePointCurrent - lastTimePoint;
-				elapsedTimer += duration_cast<milliseconds>(timeDur).count();
+			auto currentTimePoint = steady_clock::now();
+			if (duration_cast<milliseconds>(currentTimePoint - lastTimePoint).count() >= ONE_SECOND) {
+				dgCounter = 1;
+				lastTimePoint = currentTimePoint;
 			}
-			if (dgCounter <= freq && elapsedTimer <= ONE_SECOND) {
-				//std::cout << "sendto port - " << ntohs(clientAddr.sin_port) << std::endl;
-				int senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
-				if (senderr < 0)
-					std::cerr << "Error sendto" << std::endl;
-				++num %= conn.second.size();
+			else {
+				++dgCounter;
+				if (dgCounter >= freq)
+					continue;
 			}
-			else if (elapsedTimer > ONE_SECOND) {
-				dgCounter = 0;
-				elapsedTimer = 0;
-			}
-			//std::cout << std::endl;
+			senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
+			if (senderr < 0)
+				std::cerr << "Error sendto" << std::endl;
+			++num %= conn.second.size();
 		}
 		else {
 			std::cerr << "Error resieved" << std::endl;
 		}
-		timeFlag = true;
-		lastTimePoint = timePointCurrent;
 	}
 }

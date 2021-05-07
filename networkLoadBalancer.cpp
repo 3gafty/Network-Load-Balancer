@@ -54,7 +54,8 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 			if (senderr < 0) {
 				std::cerr << "Error sendto" << std::endl;
 			}
-			++num %= conn.second.size();
+			++num;
+			num %= conn.second.size();
 		}
 		else {
 			std::cerr << "Error resieved" << std::endl;

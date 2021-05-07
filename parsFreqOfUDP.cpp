@@ -12,7 +12,7 @@ int parsFreqOfUDP(const std::string& f)
 
         std::string freq;
         int value;
-        while(input >> freq) {
+        while (input >> freq) {
                 if (freq == "FREQ") {
                         input >> value;
                         break;

@@ -34,7 +34,7 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 		char buf[SIZEBUFF];
 		sockaddr_in clientAddr = conn.second[num];
 		socklen_t sizeAddr = sizeof(clientAddr);
-		int err = recvfrom(listener, buf, SIZEBUFF, MSG_CTRUNC, 0, 0);
+		int err = recvfrom(listener, buf, SIZEBUFF, MSG_TRUNC, 0, 0);
 		if (err > SIZEBUFF) {
 			std::cerr << "PacketSize more then SIZEBUFF. Not implemented case" << std::endl;
 		}

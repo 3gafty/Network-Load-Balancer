@@ -11,8 +11,7 @@
 std::pair<sockaddr_in, std::vector<sockaddr_in>> parsAddress(const std::string& f)
 {
         std::ifstream input(f);
-        if (!input)
-	{
+        if (!input) {
 		throw std::runtime_error("File could not be opened for reading!");
 	}
 

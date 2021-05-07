@@ -35,8 +35,9 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 		sockaddr_in clientAddr = conn.second[num];
 		socklen_t sizeAddr = sizeof(clientAddr);
 		int err = recvfrom(listener, buf, SIZEBUFF, MSG_CTRUNC, 0, 0);
-		if (err > SIZEBUFF)
+		if (err > SIZEBUFF) {
 			std::cerr << "PacketSize more then SIZEBUFF. Not implemented case" << std::endl;
+		}
 		else if (err > 0 && err <= SIZEBUFF) {
 			auto currentTimePoint = steady_clock::now();
 			if (duration_cast<milliseconds>(currentTimePoint - lastTimePoint).count() >= ONE_SECOND) {
@@ -45,12 +46,14 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 			}
 			else {
 				++dgCounter;
-				if (dgCounter >= freq)
+				if (dgCounter >= freq) {
 					continue;
+				}
 			}
 			senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
-			if (senderr < 0)
+			if (senderr < 0) {
 				std::cerr << "Error sendto" << std::endl;
+			}
 			++num %= conn.second.size();
 		}
 		else {

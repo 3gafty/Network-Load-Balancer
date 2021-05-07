@@ -6,8 +6,7 @@
 int parsFreqOfUDP(const std::string& f)
 {
         std::ifstream input(f);
-        if (!input)
-	{
+        if (!input) {
 		throw std::runtime_error("File could not be opened for reading!");
 	}
 

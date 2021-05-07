@@ -30,7 +30,7 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 	int num{0};
 	unsigned int dgCounter{0};
 	auto lastTimePoint = steady_clock::now();
-	int senderr{0};
+	int senderr{1};
 	while (true) {
 		char buf[SIZEBUFF];
 		sockaddr_in clientAddr = conn.second[num];
@@ -51,12 +51,15 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 					continue;
 				}
 			}
-			senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
-			if (senderr < 0) {
-				std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
+			do {
+				senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
+				if (senderr < 0) {
+					std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
+				}
+				++num;
+				num %= conn.second.size();
 			}
-			++num;
-			num %= conn.second.size();
+			while (senderr < 0);
 		}
 		else {
 			std::cerr << "Error resieved. The errno value is : " << errno << std::endl;

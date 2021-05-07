@@ -33,8 +33,6 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 	int senderr{1};
 	while (true) {
 		char buf[SIZEBUFF];
-		sockaddr_in clientAddr = conn.second[num];
-		socklen_t sizeAddr = sizeof(clientAddr);
 		int err = recvfrom(listener, buf, SIZEBUFF, MSG_TRUNC, 0, 0);
 		if (err > SIZEBUFF) {
 			std::cerr << "PacketSize more then SIZEBUFF. Not implemented case" << std::endl;
@@ -52,6 +50,8 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 				}
 			}
 			do {
+				sockaddr_in clientAddr = conn.second[num];
+				socklen_t sizeAddr = sizeof(clientAddr);
 				senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
 				if (senderr < 0) {
 					std::cerr << "Error sendto. The errno value is : " << errno << std::endl;

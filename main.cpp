@@ -3,12 +3,22 @@
 #include "networkLoadBalancer.h"
 
 #include <iostream>
+#include <csignal>
+#include <cstring>
+
+void handleSignal(int signal);
+
+void closingMessage();
+
+volatile bool run{true};
 
 int main(int argc, const char* argv[])
 {
+        signal(SIGINT, handleSignal);
+	signal(SIGTERM, handleSignal);
         try
         {
-                std::cout << "start" << std::endl;
+                std::cout << "Start Programm" << std::endl;
                 std::pair<sockaddr_in, std::vector<sockaddr_in>> addrsConnections;
                 int freq;
 
@@ -28,12 +38,54 @@ int main(int argc, const char* argv[])
         }
         catch(const std::exception& e)
         {
-                std::cerr << e.what() << std::endl;
+                std::cerr << e.what() << '\n';
                 return 1;
         }
-        catch(...) {
-		std::cerr << "unknown exception!" << std::endl;
-		return 2;
-	}
+
+        std::cout << "Exit programm" << std::endl;
         return 0;
+}
+
+void handleSignal(int signal) {
+	switch(signal) {
+		case SIGINT:
+			std::cout << "!SIGINT!" << std::endl;
+			run = false;
+                        closingMessage();
+		break;
+
+		case SIGTERM:
+			std::cout << "!SIGTERM!" << std::endl;
+			run = false;
+                        closingMessage();
+		break;
+
+		default:
+			std::cerr << "!unknown signal!" << std::endl;
+	}
+}
+
+void closingMessage()
+{
+        int finalizer = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+        if (finalizer < 0) {
+		std::cerr << "Socket failed. The errno value is: " + std::to_string(errno) << std::endl;
+	}
+        sockaddr_in sendAddrFinal;
+        memset(&sendAddrFinal, 0, sizeof(sendAddrFinal));
+        sendAddrFinal.sin_family = AF_INET;
+	sendAddrFinal.sin_port = htons(12345);
+	sendAddrFinal.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+        int opt = 1;
+	if (setsockopt (finalizer, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
+		std::cerr << "Setsockopt failde. The errno value is: " + std::to_string(errno) << std::endl;
+	}
+
+        std::string byby("exit");
+	socklen_t sizeAddr = sizeof(sendAddrFinal);
+	int senderrFinal = sendto(finalizer, &byby, byby.size() + 1, 0, (struct sockaddr *)&sendAddrFinal, sizeAddr);
+	if (senderrFinal < 0) {
+		std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
+	}
 }

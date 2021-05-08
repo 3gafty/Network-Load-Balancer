@@ -6,6 +6,10 @@
 #include <csignal>
 #include <cstring>
 
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+
 void handleSignal(int signal);
 
 void closingMessage();

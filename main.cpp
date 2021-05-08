@@ -88,4 +88,5 @@ void closingMessage()
 	if (senderrFinal < 0) {
 		std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
 	}
+	close(finalizer);
 }

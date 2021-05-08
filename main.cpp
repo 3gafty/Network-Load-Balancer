@@ -53,13 +53,11 @@ int main(int argc, const char* argv[])
 void handleSignal(int signal) {
 	switch(signal) {
 		case SIGINT:
-			std::cout << "!SIGINT!" << std::endl;
 			run = false;
                         closingMessage();
 		break;
 
 		case SIGTERM:
-			std::cout << "!SIGTERM!" << std::endl;
 			run = false;
                         closingMessage();
 		break;

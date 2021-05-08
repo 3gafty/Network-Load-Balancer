@@ -15,19 +15,16 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 
         int listener = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if (listener < 0) {
-		std::cerr << "Socket failed. The errno value is: " << errno << std::endl;
-		throw std::runtime_error("socket");
+		throw std::runtime_error("Socket failed. The errno value is: " + std::to_string(errno));
 	}
 
 	int opt = 1;
 	if (setsockopt (listener, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
-		std::cerr << "Setsockopt failde. The errno value is: " << errno << std::endl;
-		throw std::runtime_error("setsockopt");
+		throw std::runtime_error("Setsockopt failde. The errno value is: " + std::to_string(errno));
 	}
 
 	if (bind(listener, (struct sockaddr *)&conn.first, sizeof(conn.first)) < 0) {
-		std::cerr << "Bind failed. The errno value is: " << errno << std::endl;
-		throw std::runtime_error("bind");
+		throw std::runtime_error("Bind failed. The errno value is: " + std::to_string(errno));
 	}
 
 	int num{0};

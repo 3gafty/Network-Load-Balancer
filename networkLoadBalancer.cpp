@@ -9,6 +9,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
+extern bool run;
+
 void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>& conn, const unsigned int freq)
 {
 	using namespace std::chrono;
@@ -31,7 +33,7 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 	unsigned int dgCounter{0};
 	auto lastTimePoint{steady_clock::now()};
 	int senderr{1};
-	while (true) {
+	while (run) {
 		char buf[SIZEBUFF];
 		int err = recvfrom(listener, buf, SIZEBUFF, MSG_TRUNC, 0, 0);
 		if (err > SIZEBUFF) {
@@ -65,4 +67,6 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 			std::cerr << "Error resieved. The errno value is : " << errno << std::endl;
 		}
 	}
+	close(listener);
+	std::cout << "exit netWorkBalancer" << std::endl;
 }

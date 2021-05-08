@@ -18,7 +18,7 @@ int main(int argc, const char* argv[])
 	signal(SIGTERM, handleSignal);
         try
         {
-                std::cout << "Start Programm" << std::endl;
+                std::cout << "Start Program" << std::endl;
                 std::pair<sockaddr_in, std::vector<sockaddr_in>> addrsConnections;
                 int freq;
 
@@ -42,7 +42,7 @@ int main(int argc, const char* argv[])
                 return 1;
         }
 
-        std::cout << "Exit programm" << std::endl;
+        std::cout << "Exit program" << std::endl;
         return 0;
 }
 

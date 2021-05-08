@@ -51,17 +51,19 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 					continue;
 				}
 			}
-			do {
-				sockaddr_in clientAddr = conn.second[num];
-				socklen_t sizeAddr = sizeof(clientAddr);
-				senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
-				if (senderr < 0) {
-					std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
+			if (run) {
+				do {
+					sockaddr_in clientAddr = conn.second[num];
+					socklen_t sizeAddr = sizeof(clientAddr);
+					senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
+					if (senderr < 0) {
+						std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
+					}
+					++num;
+					num %= conn.second.size();
 				}
-				++num;
-				num %= conn.second.size();
+				while (senderr < 0);
 			}
-			while (senderr < 0);
 		}
 		else {
 			std::cerr << "Error resieved. The errno value is : " << errno << std::endl;

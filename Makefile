@@ -20,7 +20,7 @@ release: cppflags+=-O2
 release: nwb
 
 nwb: $(nwb_obj)
-	$(cc) $(nwb_obj) -o $@ -lm -lpthread
+	$(cc) $(nwb_obj) -o $@
 
 clean:
 	rm -f *.o nwb

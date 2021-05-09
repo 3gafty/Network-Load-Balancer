@@ -20,6 +20,7 @@ namespace mynamespace {
 		~NetworkLoadBalancer();
 
 	private:
+		void closingMessage();
 		std::pair<sockaddr_in, std::vector<sockaddr_in>> connections_;
 		unsigned int numberOfMessagesPerSecond_;
 		int listener_;

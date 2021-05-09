@@ -92,11 +92,27 @@ namespace mynamespace {
 	void NetworkLoadBalancer::stop()
 	{
 		run_ = false;
+		closingMessage();
 	}
 
 	NetworkLoadBalancer::~NetworkLoadBalancer()
 	{
 		close(listener_);
 		std::cout << "exit NetworkLoadBalancer" << std::endl;
+	}
+
+	void NetworkLoadBalancer::closingMessage()
+	{
+		int finalizer = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+		if (finalizer < 0) {
+			std::cerr << "Socket failed. The errno value is: " + std::to_string(errno) << std::endl;
+		}
+		std::string byby("exit");
+		socklen_t sizeAddr = sizeof(connections_.first);
+		int senderrFinal = sendto(finalizer, &byby, byby.size() + 1, 0, (struct sockaddr *)&connections_.first, sizeAddr);
+		if (senderrFinal < 0) {
+			std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
+		}
+		close(finalizer);
 	}
 }

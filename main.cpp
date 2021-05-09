@@ -1,7 +1,7 @@
 #include "parsAddress.h"
 #include "parsFreqOfUDP.h"
 #include "network_load_balancer.h"
-#include "closing_message.h"
+//#include "closing_message.h"
 
 #include <iostream>
 #include <csignal>
@@ -51,12 +51,12 @@ void handleSignal(int signal) {
 	switch(signal) {
 		case SIGINT:
 			Nlb->stop();
-			closingMessage();
+			//closingMessage();
 		break;
 
 		case SIGTERM:
 			Nlb->stop();
-			closingMessage();
+			//closingMessage();
 		break;
 
 		default:

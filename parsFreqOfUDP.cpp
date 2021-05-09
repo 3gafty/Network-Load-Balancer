@@ -5,22 +5,22 @@
 
 int parsFreqOfUDP(const std::string& f)
 {
-        std::ifstream input(f);
-        if (!input) {
+	std::ifstream input(f);
+	if (!input) {
 		throw std::runtime_error("File could not be opened for reading!");
 	}
 
-        std::string freq;
-        int value;
-        while (input >> freq) {
-                if (freq == "FREQ") {
-                        input >> value;
-                        break;
-                }
-        }
+	std::string freq;
+	int value;
+	while (input >> freq) {
+		if (freq == "FREQ") {
+			input >> value;
+			break;
+		}
+	}
 
-        std::cout << "The freq of messages is " << value << " per second." << std::endl;
-        input.close();
+	std::cout << "The freq of messages is " << value << " per second." << std::endl;
+	input.close();
 
-        return value;
+	return value;
 }

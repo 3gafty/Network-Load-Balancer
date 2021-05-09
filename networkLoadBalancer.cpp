@@ -15,7 +15,7 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 {
 	using namespace std::chrono;
 
-        int listener = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	int listener = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if (listener < 0) {
 		throw std::runtime_error("Socket failed. The errno value is: " + std::to_string(errno));
 	}

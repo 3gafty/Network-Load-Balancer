@@ -22,7 +22,7 @@ void networkLoadBalancer(const std::pair<sockaddr_in, std::vector<sockaddr_in>>&
 
 	int opt = 1;
 	if (setsockopt (listener, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
-		throw std::runtime_error("Setsockopt failde. The errno value is: " + std::to_string(errno));
+		throw std::runtime_error("Setsockopt failed. The errno value is: " + std::to_string(errno));
 	}
 
 	if (bind(listener, (struct sockaddr *)&conn.first, sizeof(conn.first)) < 0) {

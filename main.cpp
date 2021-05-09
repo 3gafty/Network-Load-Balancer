@@ -1,7 +1,6 @@
 #include "parsAddress.h"
 #include "parsFreqOfUDP.h"
 #include "network_load_balancer.h"
-//#include "closing_message.h"
 
 #include <iostream>
 #include <csignal>

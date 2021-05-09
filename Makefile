@@ -6,7 +6,7 @@ cc?=g++
 
 cppflags=-Wall -W -std=c++17
 
-nwb_src=main.cpp parsAddress.cpp parsFreqOfUDP.cpp networkLoadBalancer.cpp
+nwb_src=main.cpp parsAddress.cpp parsFreqOfUDP.cpp network_load_balancer.cpp closing_message.cpp
 
 nwb_obj=$(notdir $(nwb_src:.cpp=.o))
 

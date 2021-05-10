@@ -109,7 +109,7 @@ namespace mynamespace {
 		}
 		std::string byby("exit");
 		socklen_t sizeAddr = sizeof(connections_.first);
-		int senderrFinal = sendto(finalizer, &byby, byby.size() + 1, 0, (struct sockaddr *)&connections_.first, sizeAddr);
+		int senderrFinal = sendto(finalizer, byby.data(), byby.size(), 0, (struct sockaddr *)&connections_.first, sizeAddr);
 		if (senderrFinal < 0) {
 			std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
 		}

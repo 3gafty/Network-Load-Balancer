@@ -33,17 +33,17 @@ namespace mynamespace {
 
 		run_ = true;
 
-		int listener = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-		if (listener < 0) {
+		listener_ = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+		if (listener_ < 0) {
 			throw std::runtime_error("Socket failed. The errno value is: " + std::to_string(errno));
 		}
 
 		int opt = 1;
-		if (setsockopt (listener, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
+		if (setsockopt (listener_, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
 			throw std::runtime_error("Setsockopt failed. The errno value is: " + std::to_string(errno));
 		}
 
-		if (bind(listener, (struct sockaddr *)&connections_.first, sizeof(connections_.first)) < 0) {
+		if (bind(listener_, (struct sockaddr *)&connections_.first, sizeof(connections_.first)) < 0) {
 			throw std::runtime_error("Bind failed. The errno value is: " + std::to_string(errno));
 		}
 
@@ -53,7 +53,7 @@ namespace mynamespace {
 		int senderr{1};
 		while (run_) {
 			char buf[SIZEBUFF];
-			int err = recvfrom(listener, buf, SIZEBUFF, MSG_TRUNC, 0, 0);
+			int err = recvfrom(listener_, buf, SIZEBUFF, MSG_TRUNC, 0, 0);
 			if (err > SIZEBUFF) {
 				std::cerr << "PacketSize more then SIZEBUFF. Not implemented case" << std::endl;
 			}
@@ -73,7 +73,7 @@ namespace mynamespace {
 					do {
 						sockaddr_in clientAddr = connections_.second[num];
 						socklen_t sizeAddr = sizeof(clientAddr);
-						senderr = sendto(listener, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
+						senderr = sendto(listener_, buf, err, 0, (struct sockaddr *)&clientAddr, sizeAddr);
 						if (senderr < 0) {
 							std::cerr << "Error sendto. The errno value is : " << errno << std::endl;
 						}

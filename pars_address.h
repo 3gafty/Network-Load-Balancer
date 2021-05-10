@@ -1,5 +1,5 @@
-#ifndef PARSADDRESS_H
-#define PARSADDRESS_H
+#ifndef PARS_ADDRESS_H
+#define PARS_ADDRESS_H
 
 #include <vector>
 #include <utility>
@@ -10,4 +10,4 @@
 
 std::pair<sockaddr_in, std::vector<sockaddr_in>> parsAddress(const std::string& str);
 
-#endif // !PARSADDRESS_H
+#endif //	!PARS_ADDRESS_H

@@ -1,5 +1,5 @@
-#include "parsAddress.h"
-#include "parsFreqOfUDP.h"
+#include "pars_address.h"
+#include "pars_freq_of_udp.h"
 #include "network_load_balancer.h"
 
 #include <iostream>

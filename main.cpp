@@ -50,12 +50,10 @@ void handleSignal(int signal) {
 	switch(signal) {
 		case SIGINT:
 			Nlb->stop();
-			//closingMessage();
 		break;
 
 		case SIGTERM:
 			Nlb->stop();
-			//closingMessage();
 		break;
 
 		default:

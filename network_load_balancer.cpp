@@ -66,7 +66,7 @@ namespace mynamespace {
 			else if (err > 0 && err <= SIZE_BUFF)
 			{
 				while (!time_stamps_of_sended_messages_.empty() &&
-						duration_cast<microseconds>(current_time_point - time_stamps_of_sended_messages_.front()).count() >
+						duration_cast<milliseconds>(current_time_point - time_stamps_of_sended_messages_.front()).count() >
 						ONE_SECOND)
 				{
 					time_stamps_of_sended_messages_.pop_front();

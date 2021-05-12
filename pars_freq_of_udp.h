@@ -3,6 +3,6 @@
 
 #include <string>
 
-int parsFreqOfUDP(const std::string& f);
+int parsFreqOfUDP(const std::string& t_str);
 
-#endif //	!PARS_FREQ_OF_UDP_H
+#endif // PARS_FREQ_OF_UDP_H

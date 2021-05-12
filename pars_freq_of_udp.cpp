@@ -3,17 +3,20 @@
 #include <iostream>
 #include <fstream>
 
-int parsFreqOfUDP(const std::string& f)
+int parsFreqOfUDP(const std::string& t_str)
 {
-	std::ifstream input(f);
-	if (!input) {
+	std::ifstream input(t_str);
+	if (!input)
+	{
 		throw std::runtime_error("File could not be opened for reading!");
 	}
 
 	std::string freq;
 	int value;
-	while (input >> freq) {
-		if (freq == "FREQ") {
+	while (input >> freq)
+	{
+		if (freq == "FREQ")
+		{
 			input >> value;
 			break;
 		}

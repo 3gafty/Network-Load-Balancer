@@ -8,7 +8,7 @@
 
 void handleSignal(int signal);
 
-auto Nlb = std::make_unique<mynamespace::NetworkLoadBalancer>();
+auto network_load_balancer = std::make_unique<mynamespace::NetworkLoadBalancer>();
 
 int main(int argc, const char* argv[])
 {
@@ -18,26 +18,30 @@ int main(int argc, const char* argv[])
 	{
 		std::cout << "Start Program" << std::endl;
 
-		if (argc < 2) {
+		if (argc < 2)
+		{
 			throw std::runtime_error(std::string("Not select config file"));
 		}
-		else if (argc > 2) {
+		else if (argc > 2)
+		{
 			throw std::runtime_error(std::string("To many arguments."));
 		}
-		else {
-			std::string fileName(argv[1]);
-			Nlb->setConnections(parsAddress(fileName));
-			Nlb->setNumberOfMessagesPerSecond(parsFreqOfUDP(fileName));
+		else
+		{
+			std::string file_name(argv[1]);
+			network_load_balancer->setConnections(parsAddress(file_name));
+			network_load_balancer->setNumberOfMessagesPerSecond(parsFreqOfUDP(file_name));
 		}
 
-		Nlb->run();
+		network_load_balancer->run();
 	}
 	catch(const std::exception& e)
 	{
 		std::cerr << e.what() << std::endl;
 		return 1;
 	}
-	catch(...) {
+	catch(...)
+	{
 		std::cerr << "unknown exception!" << std::endl;
 		return 2;
 	}
@@ -46,14 +50,16 @@ int main(int argc, const char* argv[])
 	return 0;
 }
 
-void handleSignal(int signal) {
-	switch(signal) {
+void handleSignal(int signal)
+{
+	switch(signal)
+	{
 		case SIGINT:
-			Nlb->stop();
+			network_load_balancer->stop();
 		break;
 
 		case SIGTERM:
-			Nlb->stop();
+			network_load_balancer->stop();
 		break;
 
 		default:

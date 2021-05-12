@@ -1,12 +1,14 @@
 #ifndef NETWORK_LOAD_BALANCER_H
 #define NETWORK_LOAD_BALANCER_H
 
-#include <utility>
-#include <vector>
-
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <chrono>
+#include <list>
+
+#include <utility>
+#include <vector>
 
 namespace mynamespace {
 
@@ -22,10 +24,11 @@ namespace mynamespace {
 	private:
 		void closingMessage();
 		std::pair<sockaddr_in, std::vector<sockaddr_in>> connections_;
-		unsigned int numberOfMessagesPerSecond_;
+		unsigned int number_of_messages_per_second_;
 		int listener_;
 		bool run_;
+		std::list<std::chrono::_V2::steady_clock::time_point> time_stamps_of_sended_messages_;
 	};
 }
 
-#endif	//	!NETWORK_LOAD_BALANCER_H
+#endif	// NETWORK_LOAD_BALANCER_H

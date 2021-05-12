@@ -52,8 +52,8 @@ namespace mynamespace {
 		}
 
 		int num{0};
-		time_stamps_of_sended_messages_.push_back(steady_clock::now());
-		auto current_time_point = time_stamps_of_sended_messages_.front();
+		auto current_time_point{steady_clock::now()};
+		auto send_time_stamp{steady_clock::now()};
 		int senderr{1};
 
 		while (run_)
@@ -80,7 +80,7 @@ namespace mynamespace {
 						sockaddr_in client_addr = connections_.second[num];
 						socklen_t size_ddr = sizeof(client_addr);
 						senderr = sendto(listener_, buf, err, 0, (struct sockaddr *)&client_addr, size_ddr);
-						auto send_time_stamp = steady_clock::now();
+						send_time_stamp = steady_clock::now();
 						if (senderr < 0)
 						{
 							std::cerr << "Error sendto. The errno value is : " << errno << std::endl;

@@ -52,15 +52,13 @@ namespace mynamespace {
 		}
 
 		int num{0};
-		auto current_time_point{steady_clock::now()};
-		auto send_time_stamp{steady_clock::now()};
 		int senderr{1};
 
 		while (run_)
 		{
 			char buf[SIZE_BUFF];
 			int err = recvfrom(listener_, buf, SIZE_BUFF, MSG_TRUNC, 0, 0);
-			current_time_point = steady_clock::now();
+			auto current_time_point = steady_clock::now();
 			if (err > SIZE_BUFF)
 			{
 				std::cerr << "PacketSize more then SIZEBUFF. Not implemented case" << std::endl;
@@ -80,7 +78,7 @@ namespace mynamespace {
 						sockaddr_in client_addr = connections_.second[num];
 						socklen_t size_ddr = sizeof(client_addr);
 						senderr = sendto(listener_, buf, err, 0, (struct sockaddr *)&client_addr, size_ddr);
-						send_time_stamp = steady_clock::now();
+						auto send_time_stamp = steady_clock::now();
 						if (senderr < 0)
 						{
 							std::cerr << "Error sendto. The errno value is : " << errno << std::endl;

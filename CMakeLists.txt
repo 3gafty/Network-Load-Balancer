@@ -1,0 +1,53 @@
+cmake_minimum_required (VERSION 3.18.4)
+message(STATUS "Cmake version: ${CMAKE_VERSION}")
+
+project (nlb)
+
+find_package(GTest REQUIRED)
+
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_HOME_DIRECTORY}/bin")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2")
+
+set(CLASSES_CPP src/main)
+
+set(CLASSES src/network_load_balancer
+            src/pars_address
+            src/pars_freq_of_udp)
+
+foreach(cs_cpp ${CLASSES_CPP})
+    list(APPEND SOURCES ${cs_cpp}.cpp)
+endforeach()
+
+foreach(cs_р ${CLASSES_H})
+    list(APPEND SOURCES ${cs_h}.h)
+endforeach()
+
+foreach(class ${CLASSES})
+    list(APPEND SOURCES ${class}.cpp)
+    list(APPEND HEADERS ${class}.h)
+endforeach()
+
+add_executable (
+    ${PROJECT_NAME} ${HEADERS}
+                    ${SOURCES}
+)
+
+#target_link_libraries(
+#    ${PROJECT_NAME} PRIVATE
+#    gtest gtest_main -lpthread
+#)
+
+set_target_properties (
+    ${PROJECT_NAME} PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+)
+
+target_compile_options(${PROJECT_NAME} PRIVATE
+    -W
+    -Wall
+    -Werror
+    -Wextra
+    -Wpedantic
+)

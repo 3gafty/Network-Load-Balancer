@@ -14,9 +14,11 @@ namespace My_NLB {
 
     NLB::NLB(pair<sockaddr_in, vector<sockaddr_in>>&& conns, uint32_t nomps)
             : conns_(move(conns)), nomps_(nomps) {
+        buff_size_ = 1024;
+        sec_ = 1000;
         num_ = 0;
         senderr_ = 0;
-        buff_.resize(buff_size);
+        buff_.resize(buff_size_);
         run();
     }
 
@@ -39,22 +41,22 @@ namespace My_NLB {
         }
 
         while (run_) {
-            int err = recvfrom(listener_, buff_.data(), buff_size, MSG_TRUNC, 0, 0);
+            int err = recvfrom(listener_, buff_.data(), buff_size_, MSG_TRUNC, 0, 0);
             auto current_tp = steady_clock::now();
-            if (err > buff_size) {
+            if (err > buff_size_) {
                 cerr << "MSG more then SIZEBUFF. Not implemented." << endl;
-            } else if (err > 0 && err <= buff_size) {
+            } else if (err > 0 && err <= buff_size_) {
                 auto delta = current_tp - times_.front();
-                while (!times_.empty() && duration_cast<milliseconds>(delta).count() > sec) {
+                while (!times_.empty() && duration_cast<milliseconds>(delta).count() > sec_) {
                     times_.pop_front();
                     delta = current_tp - times_.front();
                 }
                 if (run_ && times_.size() < nomps_) {
                     do {
-                        sockaddr_in client_addr = conns_.second[num];
+                        sockaddr_in client_addr = conns_.second[num_];
                         socklen_t size_addr = sizeof(client_addr);
-                        senderr_ = sendto(listener_, 
-                                          buff_.data()
+                        senderr_ = sendto(listener_,
+                                          buff_.data(),
                                           err,
                                           0,
                                           reinterpret_cast<struct sockaddr*>(&client_addr),
@@ -65,8 +67,8 @@ namespace My_NLB {
                         } else {
                             times_.push_back(send_tp);
                         }
-                        ++num;
-                        num %= conns_.second.size();
+                        ++num_;
+                        num_ %= conns_.second.size();
                     } while (senderr_ < 0);
                 }
             } else {

@@ -10,22 +10,21 @@
 #include <vector>
 
 namespace My_NLB {
+	using namespace std;
+	using namespace std::chrono;
+
 	class NLB {
 	public:
-		using namespace std;
-		using namespace std::chrono;
-		static const size_t buff_size{1024};
-		static const uint32_t sec{1000};
-
-		explicit NLB(pair<sockaddr_in, vector<sockaddr_in>>&& conns,
-					 uint32_t nomps);
+		explicit NLB(pair<sockaddr_in, vector<sockaddr_in>>&& conns, uint32_t nomps);
 		void run();
 		~NLB();
 
 	private:
 		pair<sockaddr_in, vector<sockaddr_in>> conns_;
-		list<_V2::steady_clock::time_point> times_;
+		list<chrono::_V2::steady_clock::time_point> times_;
 		vector<uint8_t> buff_;
+		int buff_size_;
+		uint32_t sec_;
 		uint32_t nomps_;
 		int listener_;
 		bool run_;

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O2 CMakeFiles/nlb.dir/src/main.cpp.o CMakeFiles/nlb.dir/src/network_load_balancer.cpp.o -o ../bin/nlb 

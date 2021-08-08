@@ -11,9 +11,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 set(CLASSES_CPP src/main)
 
-set(CLASSES src/network_load_balancer
-            src/pars_address
-            src/pars_freq_of_udp)
+set(CLASSES src/network_load_balancer)
 
 foreach(cs_cpp ${CLASSES_CPP})
     list(APPEND SOURCES ${cs_cpp}.cpp)

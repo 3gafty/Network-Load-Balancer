@@ -1,34 +1,38 @@
 #ifndef NETWORK_LOAD_BALANCER_H
 #define NETWORK_LOAD_BALANCER_H
 
-#include <sys/socket.h>
-#include <unistd.h>
-#include <netinet/in.h>
 #include <chrono>
 #include <list>
-
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
 #include <utility>
 #include <vector>
 
-namespace mynamespace {
-
-	class NetworkLoadBalancer {
+namespace My_NLB {
+	class NLB {
 	public:
-		NetworkLoadBalancer();
-		void setConnections(std::pair<sockaddr_in, std::vector<sockaddr_in>>&& t_conn);
-		void setNumberOfMessagesPerSecond(unsigned int t_freq);
+		using namespace std;
+		using namespace std::chrono;
+		static const size_t buff_size{1024};
+		static const uint32_t sec{1000};
+
+		explicit NLB(pair<sockaddr_in, vector<sockaddr_in>>&& conns,
+					 uint32_t nomps);
 		void run();
-		void stop();
-		~NetworkLoadBalancer();
+		~NLB();
 
 	private:
-		void closingMessage();
-		std::pair<sockaddr_in, std::vector<sockaddr_in>> connections_;
-		unsigned int number_of_messages_per_second_;
+		pair<sockaddr_in, vector<sockaddr_in>> conns_;
+		list<_V2::steady_clock::time_point> times_;
+		vector<uint8_t> buff_;
+		uint32_t nomps_;
 		int listener_;
 		bool run_;
-		std::list<std::chrono::_V2::steady_clock::time_point> time_stamps_of_sended_messages_;
-	};
-}
+		int num_;
+	    int senderr_;
 
-#endif	// NETWORK_LOAD_BALANCER_H
+	};
+}	//!My_NLB
+
+#endif	//!NETWORK_LOAD_BALANCER_H

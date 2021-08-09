@@ -4,6 +4,7 @@ message(STATUS "Cmake version: ${CMAKE_VERSION}")
 project (nlb)
 
 find_package(GTest REQUIRED)
+find_package(nlohmann_json 3.9.1 REQUIRED)
 
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_HOME_DIRECTORY}/bin")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
@@ -33,6 +34,8 @@ add_executable (
                     ${SOURCES}
 )
 
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
+
 #target_link_libraries(
 #    ${PROJECT_NAME} PRIVATE
 #    gtest gtest_main -lpthread
@@ -40,7 +43,7 @@ add_executable (
 
 set_target_properties (
     ${PROJECT_NAME} PROPERTIES
-    CXX_STANDARD 17
+    CXX_STANDARD 20
     CXX_STANDARD_REQUIRED ON
 )
 

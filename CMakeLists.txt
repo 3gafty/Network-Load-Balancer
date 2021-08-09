@@ -10,8 +10,10 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 set(CLASSES_CPP src/main)
+#set(CLASSES_H src/json)
 
-set(CLASSES src/network_load_balancer)
+set(CLASSES src/network_load_balancer
+            src/parser)
 
 foreach(cs_cpp ${CLASSES_CPP})
     list(APPEND SOURCES ${cs_cpp}.cpp)
@@ -38,7 +40,7 @@ add_executable (
 
 set_target_properties (
     ${PROJECT_NAME} PROPERTIES
-    CXX_STANDARD 20
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
 

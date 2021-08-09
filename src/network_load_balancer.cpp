@@ -55,10 +55,7 @@ namespace My_NLB {
                     do {
                         sockaddr_in client_addr = conns_.second[num_];
                         socklen_t size_addr = sizeof(client_addr);
-                        senderr_ = sendto(listener_,
-                                          buff_.data(),
-                                          err,
-                                          0,
+                        senderr_ = sendto(listener_, buff_.data(), err, 0,
                                           reinterpret_cast<struct sockaddr*>(&client_addr),
                                           size_addr);
                         auto send_tp = steady_clock::now();
@@ -81,4 +78,5 @@ namespace My_NLB {
         run_ = false;
         close(listener_);
     }
+
 }   //!My_NLB

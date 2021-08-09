@@ -1,3 +1,0 @@
-/home/kolian/dev/Network-Load-Balancer/build/CMakeFiles/rebuild_cache.dir
-/home/kolian/dev/Network-Load-Balancer/build/CMakeFiles/edit_cache.dir
-/home/kolian/dev/Network-Load-Balancer/build/CMakeFiles/nlb.dir

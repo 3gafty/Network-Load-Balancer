@@ -40,6 +40,7 @@ target_link_libraries(
 
 add_executable (
         test_nlb tests/test_nlb.cpp
+                 tests/sender_recipient
 )
 
 target_link_libraries(

@@ -38,7 +38,6 @@ target_link_libraries(
     nlohmann_json::nlohmann_json
 )
 
-
 add_executable (
         test_nlb tests/test_nlb.cpp
 )

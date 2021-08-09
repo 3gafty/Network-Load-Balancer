@@ -11,7 +11,6 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 set(CLASSES_CPP src/main)
-#set(CLASSES_H src/json)
 
 set(CLASSES src/network_load_balancer
             src/parser)
@@ -34,12 +33,20 @@ add_executable (
                     ${SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(
+    ${PROJECT_NAME} PRIVATE
+    nlohmann_json::nlohmann_json
+)
 
-#target_link_libraries(
-#    ${PROJECT_NAME} PRIVATE
-#    gtest gtest_main -lpthread
-#)
+
+add_executable (
+        test_nlb tests/test_nlb.cpp
+)
+
+target_link_libraries(
+    test_nlb PRIVATE
+    gtest gtest_main -lpthread
+)
 
 set_target_properties (
     ${PROJECT_NAME} PROPERTIES

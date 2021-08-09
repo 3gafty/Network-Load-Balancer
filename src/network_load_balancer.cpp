@@ -12,8 +12,7 @@ namespace My_NLB {
     using namespace std;
     using namespace std::chrono;
 
-    NLB::NLB(pair<sockaddr_in, vector<sockaddr_in>>&& conns, uint32_t nomps)
-            : conns_(move(conns)), nomps_(nomps) {
+    NLB::NLB(pair<sockaddr_in, vector<sockaddr_in>>&& conns, uint32_t nomps) : conns_(move(conns)), nomps_(nomps) {
         buff_size_ = 1024;
         sec_ = 1000;
         num_ = 0;
@@ -34,10 +33,8 @@ namespace My_NLB {
             throw runtime_error("Setsockopt failed. The errno value is: " + to_string(errno));
         }
 
-        if (bind(listener_, reinterpret_cast<struct sockaddr*>(&conns_.first),
-                 sizeof(conns_.first)) < 0) {
-            throw runtime_error("Bind failed. The errno value is: " +
-                                to_string(errno));
+        if (bind(listener_, reinterpret_cast<struct sockaddr*>(&conns_.first), sizeof(conns_.first)) < 0) {
+            throw runtime_error("Bind failed. The errno value is: " + to_string(errno));
         }
 
         while (run_) {

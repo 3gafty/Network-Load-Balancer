@@ -38,16 +38,6 @@ target_link_libraries(
     nlohmann_json::nlohmann_json
 )
 
-add_executable (
-        test_nlb tests/test_nlb.cpp
-                 tests/sender_recipient
-)
-
-target_link_libraries(
-    test_nlb PRIVATE
-    gtest gtest_main -lpthread
-)
-
 set_target_properties (
     ${PROJECT_NAME} PROPERTIES
     CXX_STANDARD 20

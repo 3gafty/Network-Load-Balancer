@@ -10,19 +10,19 @@
 
 namespace My_NLB {
 
-	using namespace std;
-	class Parser {
-	public:
-		explicit Parser(const string path = "../config.json");
-		pair<sockaddr_in, vector<sockaddr_in>>& getConns();
-		uint32_t getNomps() const;
+    using namespace std;
+    class Parser {
+    public:
+        explicit Parser(const string path = "../config.json");
+        pair<sockaddr_in, vector<sockaddr_in>>& getConns();
+        uint32_t getNomps() const;
 
-	private:
-		pair<sockaddr_in, vector<sockaddr_in>> conns_;
-		uint32_t nomps_;
+    private:
+        pair<sockaddr_in, vector<sockaddr_in>> conns_;
+        uint32_t nomps_;
 
-	};
+    };
 
-}	//!My_NLB
+}   //!My_NLB
 
-#endif	//!PARSER_H
+#endif  //!PARSER_H

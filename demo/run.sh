@@ -1,7 +1,7 @@
 #!/bin/bash
 
-gnome-terminal --command='./client1'
-gnome-terminal --command='./client2'
-gnome-terminal --command='./client3'
-gnome-terminal --command='./nlb' && echo "start Network-load-balancer"
-gnome-terminal --command='./source' && echo "start source"
+gnome-terminal -- './client1'
+gnome-terminal -- './client2'
+gnome-terminal -- './client3'
+gnome-terminal -- './nlb'
+gnome-terminal -- './source'

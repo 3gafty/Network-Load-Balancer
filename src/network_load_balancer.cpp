@@ -14,7 +14,7 @@ namespace My_NLB {
 
     NLB::NLB(pair<sockaddr_in, vector<sockaddr_in>>&& conns, uint32_t nomps) : conns_(move(conns)), nomps_(nomps) {
         buff_size_ = 1024;
-        sec_ = 1000;
+        sec_ = 1000000;
         num_ = 0;
         senderr_ = 0;
         buff_.resize(buff_size_);
@@ -44,11 +44,11 @@ namespace My_NLB {
                 cerr << "MSG more then SIZEBUFF. Not implemented." << endl;
             } else if (err > 0 && err <= buff_size_) {
                 auto delta = current_tp - times_.front();
-                while (!times_.empty() && duration_cast<milliseconds>(delta).count() > sec_) {
+                while (!times_.empty() && duration_cast<microseconds>(delta).count() > sec_) {
                     times_.pop_front();
                     delta = current_tp - times_.front();
                 }
-                if (run_ && times_.size() < nomps_) {
+                if (run_ && (times_.size() < nomps_)) {
                     do {
                         sockaddr_in client_addr = conns_.second[num_];
                         socklen_t size_addr = sizeof(client_addr);

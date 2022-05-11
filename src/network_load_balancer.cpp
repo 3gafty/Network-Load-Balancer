@@ -55,7 +55,7 @@ namespace My_NLB
             }
             else if (err > 0 && err <= buff_size_)
             {
-                times_.empty() ? delta = current_tp - times_.front() : delta = current_tp - times_.front();
+                times_.empty() ? delta = current_tp - current_tp : delta = current_tp - times_.front();
                 while (!times_.empty() && duration_cast<microseconds>(delta).count() > sec_)
                 {
                     times_.pop_front();

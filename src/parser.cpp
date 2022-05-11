@@ -11,14 +11,17 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-namespace My_NLB {
+namespace My_NLB
+{
 	using namespace std;
 	using json = nlohmann::json;
 	json j_object;
 
-	Parser::Parser(const string path) {
+	Parser::Parser(const string path)
+    {
 		ifstream j_file(path);
-		if (!j_file.is_open()) {
+		if (!j_file.is_open())
+        {
 			throw runtime_error("Can't open config.json file(" + path + "), errno value is " + to_string(errno));
 		}
 
@@ -33,7 +36,8 @@ namespace My_NLB {
 		source.sin_addr.s_addr = inet_addr(j_object.at("source").at("ip").get<string>().c_str());
 
 		vector<sockaddr_in> destinations;
-		for (const auto& el : j_object.at("destinations")) {
+		for (const auto& el : j_object.at("destinations"))
+        {
 			sockaddr_in dest;
 			dest.sin_family = AF_INET;
 			dest.sin_port = htons(el.at("port").get<uint16_t>());
@@ -43,11 +47,13 @@ namespace My_NLB {
 		conns_ = make_pair(source, destinations);
 	}
 
-	pair<sockaddr_in, vector<sockaddr_in>>& Parser::getConns() {
+	pair<sockaddr_in, vector<sockaddr_in>>& Parser::getConns()
+    {
 		return conns_;
 	}
 
-	uint32_t Parser::getNomps() const {
+	uint32_t Parser::getNomps() const
+    {
 		return nomps_;
 	}
 

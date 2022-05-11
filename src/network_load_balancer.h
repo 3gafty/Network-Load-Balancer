@@ -9,11 +9,13 @@
 #include <utility>
 #include <vector>
 
-namespace My_NLB {
+namespace My_NLB
+{
     using namespace std;
     using namespace std::chrono;
 
-    class NLB {
+    class NLB
+    {
     public:
         explicit NLB(pair<sockaddr_in, vector<sockaddr_in>>&& conns, uint32_t nomps);
         void run();

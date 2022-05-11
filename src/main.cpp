@@ -3,14 +3,21 @@
 
 #include <iostream>
 
-int main() {
+int main()
+{
     using namespace My_NLB;
-    try {
+
+    try
+    {
         Parser prs;
         NLB nlb(std::move(prs.getConns()), prs.getNomps());
-    } catch (const exception& e) {
+    }
+    catch (const exception& e)
+    {
         std::cerr << e.what() << std::endl;
-    } catch (...) {
+    }
+    catch (...)
+    {
         std::cerr << "Unknown exception!" << std::endl;
     }
 

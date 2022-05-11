@@ -8,10 +8,12 @@
 #include <utility>
 #include <vector>
 
-namespace My_NLB {
+namespace My_NLB
+{
 
     using namespace std;
-    class Parser {
+    class Parser
+    {
     public:
         explicit Parser(const string path = "../config.json");
         pair<sockaddr_in, vector<sockaddr_in>>& getConns();
